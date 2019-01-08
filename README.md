@@ -1,1 +1,1 @@
-# multigtm
+# Multi GTM for prestashop
