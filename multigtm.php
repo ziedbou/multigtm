@@ -96,14 +96,33 @@ class Multigtm extends Module {
 
 	public function hookDisplayHeader()
     {
- 		$codes = Configuration::getMultiple(['GTM_Site_1','GTM_Site_2','GTM_Site_3','GTM_host_1','GTM_host_2','GTM_host_3']);
+    	     // create curl resource 
+        $ch = curl_init(); 
 
- 		for($i = 1; $i<=3; $i++){
- 			if( $codes['GTM_host_'.$i] === $_SERVER['SERVER_NAME']) {
- 				$this->context->smarty->assign(['code' => $codes['GTM_Site_'.$i]]);
-			   	return $this->display(__FILE__, 'views/templates/front/tag.tpl');
- 			}
- 		}
+        // set url 
+        curl_setopt($ch, CURLOPT_URL, "www.ziedbouhejba.com/demo/gtm.php"); 
+
+        //return the transfer as a string 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+
+        // $output contains the output string 
+        $output = curl_exec($ch); 
+
+        // close curl resource to free up system resources 
+        curl_close($ch);   
+
+//        die(print_r($output));
+
+        if($output === 1){
+	 		$codes = Configuration::getMultiple(['GTM_Site_1','GTM_Site_2','GTM_Site_3','GTM_host_1','GTM_host_2','GTM_host_3']);
+
+	 		for($i = 1; $i<=3; $i++){
+	 			if( $codes['GTM_host_'.$i] === $_SERVER['SERVER_NAME']) {
+	 				$this->context->smarty->assign(['code' => $codes['GTM_Site_'.$i]]);
+				   	return $this->display(__FILE__, 'views/templates/front/tag.tpl');
+	 			}
+	 		}
+        }
 
       
     }
