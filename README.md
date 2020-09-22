@@ -1,1 +1,1 @@
-# Multi GTM for Prestashop
+# Multi Google Tag Manager for Prestashop 
